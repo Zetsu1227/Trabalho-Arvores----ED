@@ -6,11 +6,11 @@ PENDENTE: Colocar explicações do código
 
 - Como chamar no Ubuntu(Linux)
 
-Local dos arquivos:
-cd /mnt/c/Users/LocalDosArquivos
+  1. Local dos arquivos:
+    cd /mnt/c/Users/LocalDosArquivos
 
-Criar o executavel:
-gcc -o main main.c arvores.c arvores.h
+  2.Criar o executavel:
+    gcc -o main main.c arvores.c arvores.h
 
-Executar o programa e suas entradas:
-./main dataset.csv lista_jogador1.txt saida1.txt
+  3.Executar o programa e suas entradas:
+    ./main dataset.csv lista_jogador1.txt saida1.txt
