@@ -449,18 +449,9 @@ void montaArvores(char nomeArq[], Nodo** Splay, Nodo** ABP, Nodo** AVL)
         //se conseguir realizara a leitura
         while(fgets(strAux, N, arq))
         {
-<<<<<<< Updated upstream
-            //se conseguir realizara a leitura
-            if(fgets(strAux, N, arq) !=0)
-            {
-                //quebra a linha atual em duas partes no separador indicado pela virgula
-                pchar = strtok(strAux, ",");
-                strcpy(jogoAux.nome, strlwr(pchar));    //copia o nome do jogo em minusculo para uma variavel de jogo auxiliar
-=======
             //quebra a linha atual em duas partes no separador indicado pela virgula
             pchar = strtok(strAux, ",");
             strcpy(jogoAux.nome, pchar);    //copia o nome do jogo para uma variavel de jogo auxiliar
->>>>>>> Stashed changes
 
             //tranforma o caractere numerico ascii para float
             //e guarda na variavel de jogo auxiliar
@@ -512,19 +503,9 @@ void montaSaida(char listaJogos[], char saida[], Nodo* Splay, Nodo* ABP, Nodo* A
             //se conseguir realizar a leitura
             while(fgets(strAux, N, arqJogos))
             {
-<<<<<<< Updated upstream
-                //se conseguir realizar a leitura
-                if(fgets(strAux, N, arqJogos) !=0)
-                {
-                    //copia o nome do jogo na lista em minusculo para uma variave auxiliar
-                    //para fazer uma comparação não case sensitive
-                    strAux[strlen(strAux)-1] = '\0';
-                    strcpy(nomeJogo, strlwr(strAux));
-=======
                 // remove \n e \r do final da linha
                 strAux[strcspn(strAux, "\r\n")] = '\0';
                 strcpy(nomeJogo, strAux);
->>>>>>> Stashed changes
 
                 //procura o jogo na ABP
                 jogoAux = consultaABP(ABP, nomeJogo);

@@ -1,22 +1,22 @@
-Tempo total estimado: 2682.90
+Tempo total estimado: 2687.21
 
 ======== ESTATÍSTICAS ABP ============
 Número de Nodos: 3598
 Altura: 28
 Rotações: 0
-Comparações: 3067
+Comparações: 3058
 
 ======== ESTATÍSTICAS SPLAY ============
 Número de Nodos: 3598
-Altura antes da busca: 29
-Altura depois da busca: 26
-Rotações antes da busca: 49807
-Rotações depois da busca: 52697
-Comparações: 1592
+Altura antes da busca: 30
+Altura depois da busca: 29
+Rotações antes da busca: 49698
+Rotações depois da busca: 52615
+Comparações: 1613
 
 ======== ESTATÍSTICAS AVL ============
 Número de Nodos: 3598
 Altura: 14
-Rotações: 1822
-Comparações: 2147
+Rotações: 1809
+Comparações: 2152
 
