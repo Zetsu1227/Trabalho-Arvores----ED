@@ -38,7 +38,7 @@ Nodo* insere(Nodo* raiz, Jogo jogo)
         raiz->dir = NULL;
         return raiz;
     }
-    if(strcmp(jogo.nome, raiz->jogo.nome) < 0)
+    if(strcasecmp(jogo.nome, raiz->jogo.nome) < 0)
         raiz->esq = insere(raiz->esq, jogo);
 
     else
@@ -77,10 +77,10 @@ Jogo consultaABP(Nodo* raiz, char jogo[])
     {
         comparacoesABP++;
 
-        if(strcmp(jogo, raiz->jogo.nome) == 0)
+        if(strcasecmp(jogo, raiz->jogo.nome) == 0)
             return raiz->jogo;
 
-        else if(strcmp(jogo, raiz->jogo.nome) < 0)
+        else if(strcasecmp(jogo, raiz->jogo.nome) < 0)
             raiz = raiz->esq;
         else
             raiz = raiz->dir;
@@ -98,10 +98,10 @@ Jogo consultaAVL(Nodo* raiz, char jogo[])
     {
         comparacoesAVL++;
 
-        if(strcmp(jogo, raiz->jogo.nome) == 0)
+        if(strcasecmp(jogo, raiz->jogo.nome) == 0)
             return raiz->jogo;
 
-        else if(strcmp(jogo, raiz->jogo.nome) < 0)
+        else if(strcasecmp(jogo, raiz->jogo.nome) < 0)
             raiz = raiz->esq;
         else
             raiz = raiz->dir;
@@ -120,7 +120,7 @@ Nodo* splay(Nodo* raiz, char jogo[])
     if (raiz == NULL)
         return NULL;
 
-    int aux = strcmp(jogo, raiz->jogo.nome);
+    int aux = strcasecmp(jogo, raiz->jogo.nome);
 
     //trecho de codigo responsavel por contabilizar o numero de comparacoes feitas na Splay
     if(ehBuscaSplay)
@@ -137,7 +137,7 @@ Nodo* splay(Nodo* raiz, char jogo[])
         if (raiz->esq == NULL)
             return raiz;
 
-        int aux2 = strcmp(jogo, raiz->esq->jogo.nome);
+        int aux2 = strcasecmp(jogo, raiz->esq->jogo.nome);
 
         // zig-zig
         if (aux2 < 0)
@@ -167,7 +167,7 @@ Nodo* splay(Nodo* raiz, char jogo[])
         if (raiz->dir == NULL)
             return raiz;
 
-        int aux2 = strcmp(jogo, raiz->dir->jogo.nome);
+        int aux2 = strcasecmp(jogo, raiz->dir->jogo.nome);
 
         // zag-zig
         if (aux2 < 0)
@@ -233,9 +233,17 @@ Nodo* insereSplay(Nodo *raiz, Jogo jogo)
 //funcao que realiza a consulta em uma Splay
 Jogo consultaSplay(Nodo** raiz, char jogo[])
 {
-    //realiza Splay do nodo procurado, trazendo-o para a raiz
     *raiz = splay(*raiz, jogo);
-    return (*raiz)->jogo;
+
+    // verificar se realmente encontrou o jogo
+    if (strcasecmp((*raiz)->jogo.nome, jogo) == 0)
+        return (*raiz)->jogo;
+
+    // nao encontrado
+    Jogo vazio;
+    vazio.horas = 0;
+    vazio.nome[0] = '\0'; //sla so pra dizer q nao encontrou
+    return vazio;
 }
 
 // ====================================================================================================
@@ -345,7 +353,7 @@ Nodo* insereAVL (Nodo *a, char *nome, float x, int *ok)
         a->FB = 0;
         *ok = 1;
     }
-    else if (strcmp(nome, a->jogo.nome) < 0)
+    else if (strcasecmp(nome, a->jogo.nome) < 0)
     {
         a->esq = insereAVL(a->esq,nome,x,ok);
         if (*ok)
@@ -438,28 +446,37 @@ void montaArvores(char nomeArq[], Nodo** Splay, Nodo** ABP, Nodo** AVL)
     arq = fopen(nomeArq, "r");
     if(arq != NULL)
     {
-        //enquanto o arquivo nao chegar ao fim
-        while(!feof(arq))
+        //se conseguir realizara a leitura
+        while(fgets(strAux, N, arq))
         {
+<<<<<<< Updated upstream
             //se conseguir realizara a leitura
             if(fgets(strAux, N, arq) !=0)
             {
                 //quebra a linha atual em duas partes no separador indicado pela virgula
                 pchar = strtok(strAux, ",");
                 strcpy(jogoAux.nome, strlwr(pchar));    //copia o nome do jogo em minusculo para uma variavel de jogo auxiliar
+=======
+            //quebra a linha atual em duas partes no separador indicado pela virgula
+            pchar = strtok(strAux, ",");
+            strcpy(jogoAux.nome, pchar);    //copia o nome do jogo para uma variavel de jogo auxiliar
+>>>>>>> Stashed changes
 
-                //tranforma o caractere numerico ascii para float
-                //e guarda na variavel de jogo auxiliar
-                pchar = strtok(NULL, "\n");
-                jogoAux.horas = atof(pchar);
+            //tranforma o caractere numerico ascii para float
+            //e guarda na variavel de jogo auxiliar
+            pchar = strtok(NULL, "\n");
+            jogoAux.horas = atof(pchar);
 
-                *Splay = insereSplay(*Splay, jogoAux);  //insere na Splay
-                *ABP = insere(*ABP, jogoAux);           //insere na ABP
-                *AVL = insereAVL(*AVL, jogoAux.nome, jogoAux.horas, &ok);     //insere na AVL
 
-                nodos++;    //incrementa a contagem de nodos inseridos
-            }
+            *Splay = insereSplay(*Splay, jogoAux);  //insere na Splay
+
+            *ABP = insere(*ABP, jogoAux);           //insere na ABP
+
+            *AVL = insereAVL(*AVL, jogoAux.nome, jogoAux.horas, &ok);     //insere na AVL
+
+            nodos++;    //incrementa a contagem de nodos inseridos
         }
+
         fclose(arq);    //fecha o arquivo
     }
 }
@@ -478,6 +495,7 @@ void montaSaida(char listaJogos[], char saida[], Nodo* Splay, Nodo* ABP, Nodo* A
     int alturaSplayDepois;
     int rotacoesSplayAntes;
 
+
     alturaABP = altura(ABP);    //realiza a contagem da altura da ABP
     alturaSplayAntes = altura(Splay);   //realiza a contagem da Splay antes das buscas
     alturaAVL = altura(AVL);
@@ -491,9 +509,10 @@ void montaSaida(char listaJogos[], char saida[], Nodo* Splay, Nodo* ABP, Nodo* A
             ehBuscaSplay = 1;   //muda para 1, indicando que sera realizada busca, liberando a contagem de comparacoes na funcao Splay
             rotacoesSplayAntes = rotacoesSplay; //armazena o numero de rotacoes da Splay antes das buscas
 
-            //enquanto o arquivo nao acabar
-            while(!feof(arqJogos))
+            //se conseguir realizar a leitura
+            while(fgets(strAux, N, arqJogos))
             {
+<<<<<<< Updated upstream
                 //se conseguir realizar a leitura
                 if(fgets(strAux, N, arqJogos) !=0)
                 {
@@ -501,20 +520,27 @@ void montaSaida(char listaJogos[], char saida[], Nodo* Splay, Nodo* ABP, Nodo* A
                     //para fazer uma comparação não case sensitive
                     strAux[strlen(strAux)-1] = '\0';
                     strcpy(nomeJogo, strlwr(strAux));
+=======
+                // remove \n e \r do final da linha
+                strAux[strcspn(strAux, "\r\n")] = '\0';
+                strcpy(nomeJogo, strAux);
+>>>>>>> Stashed changes
 
-                    //procura o jogo na ABP
-                    jogoAux = consultaABP(ABP, nomeJogo);
+                //procura o jogo na ABP
+                jogoAux = consultaABP(ABP, nomeJogo);
 
-                    //incrementa o numero de horas correspondente ao jogo procurado
+
+                //incrementa o numero de horas correspondente ao jogo procurad
+                if(strcasecmp(jogoAux.nome, nomeJogo) == 0) //confirma que realmente é
                     horas += jogoAux.horas;
 
-                    //procura o jogo na Splay
-                    jogoAux = consultaSplay(&Splay, nomeJogo);
+                //procura o jogo na Splay
+                jogoAux = consultaSplay(&Splay, nomeJogo);
 
-                    //procura o jogo na avl
-                    jogoAux = consultaAVL(AVL, nomeJogo);
-                }
+                //procura o jogo na avl
+                jogoAux = consultaAVL(AVL, nomeJogo);
             }
+
             alturaSplayDepois = altura(Splay);//realiza a contagem da altura da splay apos a busca
 
             //horas totais
