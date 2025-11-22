@@ -446,7 +446,7 @@ void montaArvores(char nomeArq[], Nodo** Splay, Nodo** ABP, Nodo** AVL)
             {
                 //quebra a linha atual em duas partes no separador indicado pela virgula
                 pchar = strtok(strAux, ",");
-                strcpy(jogoAux.nome, pchar);    //copia o nome do jogo para uma variavel de jogo auxiliar
+                strcpy(jogoAux.nome, strlwr(pchar));    //copia o nome do jogo em minusculo para uma variavel de jogo auxiliar
 
                 //tranforma o caractere numerico ascii para float
                 //e guarda na variavel de jogo auxiliar
@@ -497,9 +497,10 @@ void montaSaida(char listaJogos[], char saida[], Nodo* Splay, Nodo* ABP, Nodo* A
                 //se conseguir realizar a leitura
                 if(fgets(strAux, N, arqJogos) !=0)
                 {
-                    //copia o nome do jogo na lista para uma variave auxiliar
+                    //copia o nome do jogo na lista em minusculo para uma variave auxiliar
+                    //para fazer uma comparação não case sensitive
                     strAux[strlen(strAux)-1] = '\0';
-                    strcpy(nomeJogo, strAux);
+                    strcpy(nomeJogo, strlwr(strAux));
 
                     //procura o jogo na ABP
                     jogoAux = consultaABP(ABP, nomeJogo);
